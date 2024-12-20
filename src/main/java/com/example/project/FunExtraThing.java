@@ -2,8 +2,14 @@ package com.example.project;
 
 public class FunExtraThing {
 
-    public static String[][] nameSort(String[] names, int numLists, int min, int max){ // your will be tested on this method
-        if (numLists * max < names.length) {
+    public static String[][] nameSort(String[] names, int numLists, int min, int max) {
+        System.out.println(numLists + " " + max + " " + names.length);
+        if (min * numLists > names.length) {
+            throw new IllegalArgumentException("The fewest possible items that can be sorted into " + numLists + 
+            " lists with a min size of " + min + " is " + (min * numLists) + " <Entered " + names.length + ">");
+        } else if (min > max) {
+            throw new IllegalArgumentException("The minimum list length cannot be greater than the max <" + min + " is greater than " + max + ">");
+        } else if (numLists * max < names.length) {
             throw new IllegalArgumentException("The most possible items that can be sorted into " + numLists + 
             " lists with a max size of " + max + " is " + (max * numLists) + " <Entered " + names.length + ">");
         }
@@ -22,10 +28,9 @@ public class FunExtraThing {
         }
 
         for (int i = 0; i < numLists; i++) {
-            System.out.println();
             while (numEach[i] < min) {
                 int randVal = (int) (Math.random() * names.length);
-                while (fullList[assignments[randVal]].length <= min) {
+                while (numEach[assignments[randVal]] <= min) {
                     randVal = (int) (Math.random() * names.length);
                 }
                 fullList[i][randVal] = fullList[assignments[randVal]][randVal];
@@ -45,16 +50,21 @@ public class FunExtraThing {
                 // }
             }
         }
+        for (int i = 0; i < numLists; i++) {
+            System.out.print(numEach[i] + " ");
+        }
 
         for (int i = 0; i < numLists; i++) {
             String[] shortVer = new String[numEach[i]];
             int numAdded = 0;
             for (int j = 0; j < names.length; j++) {
                 if (fullList[i][j] != null) {
+                    System.out.print(numAdded + " ");
                     shortVer[numAdded] = fullList[i][j];
                     numAdded++;
                 }
             }
+            System.out.println();
             fullList[i] = shortVer;
         }
         return fullList;
@@ -65,11 +75,11 @@ public class FunExtraThing {
 
         // Array Intialised and Assigned
         // String[] names = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
-        String[] names = new String[90];
+        String[] names = new String[100];
         for (int i = 0; i < names.length; i++) {
             names[i] = "" + (10 + i);
         }
-        String[][] arr = nameSort(names, 20, 3, 7);
+        String[][] arr = nameSort(names, 20, 5, 100);
 
         // Printing the Array
         for (int i = 0; i < arr.length; i++){
