@@ -16,40 +16,53 @@ public class FunExtraThing {
         int[] assignments = new int[names.length];
         int[] numEach = new int[numLists];
         String[][] fullList = new String[numLists][names.length];
-
-        for (int i = 0; i < names.length; i++) {
-            int randVal = (int) (Math.random() * numLists);
-            while(numEach[randVal] >= max) {
-                randVal = (int) (Math.random() * numLists);
+        for (int i = 0; i < numLists; i++) {
+            for (int j = 0; j < min; j++) {
+                int idx = (int) (Math.random() * names.length);
+                while (names[idx] == null) {
+                    idx = (int) (Math.random() * names.length);
+                }
+                fullList[i][j] = names[idx];
+                names[idx] = null;
             }
-            numEach[randVal]++;
-            fullList[randVal][i] = names[i];
-            assignments[i] = randVal;
+            numEach[i] = min;
+        }
+        for (int i = 0; i < names.length; i++) {
+            if (names[i] != null) {
+                int randVal = (int) (Math.random() * numLists);
+                while(numEach[randVal] >= max) {
+                    randVal = (int) (Math.random() * numLists);
+                }
+                numEach[randVal]++;
+                fullList[randVal][i] = names[i];
+                assignments[i] = randVal;
+            }
         }
 
-        for (int i = 0; i < numLists; i++) {
-            while (numEach[i] < min) {
-                int randVal = (int) (Math.random() * names.length);
-                while (numEach[assignments[randVal]] <= min) {
-                    randVal = (int) (Math.random() * names.length);
-                }
-                fullList[i][randVal] = fullList[assignments[randVal]][randVal];
-                fullList[assignments[randVal]][randVal] = null;
-                numEach[i]++;
-                numEach[assignments[randVal]]--;
+        // for (int i = 0; i < numLists; i++) {
+        //     while (numEach[i] < min) {
+        //         int randVal = (int) (Math.random() * names.length);
+        //         while (numEach[assignments[randVal]] <= min) {
+        //             randVal = (int) (Math.random() * names.length);
+        //         }
+        //         fullList[i][randVal] = fullList[assignments[randVal]][randVal];
+        //         fullList[assignments[randVal]][randVal] = null;
+        //         numEach[i]++;
+        //         numEach[assignments[randVal]]--;
 
                 
-                // int randVal = (int) (Math.random() * numLists);
-                // while (numEach[randVal] <= min) {
-                //     randVal = (int) (Math.random() * numLists);
-                // }
+        //         // int randVal = (int) (Math.random() * numLists);
+        //         // while (numEach[randVal] <= min) {
+        //         //     randVal = (int) (Math.random() * numLists);
+        //         // }
 
-                // int randTwo = (int) (Math.random() * names.length);
-                // while (fullList[randVal][]) {
-                //     randTwo = (int) (Math.random() * names.length);
-                // }
-            }
-        }
+        //         // int randTwo = (int) (Math.random() * names.length);
+        //         // while (fullList[randVal][]) {
+        //         //     randTwo = (int) (Math.random() * names.length);
+        //         // }
+        //     }
+        // }
+
         for (int i = 0; i < numLists; i++) {
             System.out.print(numEach[i] + " ");
         }
@@ -79,7 +92,7 @@ public class FunExtraThing {
         for (int i = 0; i < names.length; i++) {
             names[i] = "" + (10 + i);
         }
-        String[][] arr = nameSort(names, 20, 5, 100);
+        String[][] arr = nameSort(names, 20, 4, 100);
 
         // Printing the Array
         for (int i = 0; i < arr.length; i++){
